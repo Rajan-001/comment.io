@@ -6,6 +6,7 @@ import { MdCollectionsBookmark } from 'react-icons/md'
 import Image from 'next/image'
 import PieChart from './Chart'
 import { CommentsAnalysis } from './CommentsAnalysis'
+import Link from 'next/link'
 type Props = {}
 
 export const LandingPage = (props: Props) => {
@@ -84,7 +85,11 @@ export const LandingPage = (props: Props) => {
                 <div>FAQs</div>
                 <div>History</div>
               </div>
-              <div><GiLynxHead className="w-8 h-8" /></div>
+              <div>
+                <Link href="/payment">
+                <GiLynxHead className="w-8 h-8"  />
+                </Link>
+                </div>
             </div>
             <div className="flex justify-center items-center w-full h-1/5">
               <div>
