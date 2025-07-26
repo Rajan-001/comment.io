@@ -8,17 +8,24 @@ import { MdCollectionsBookmark } from "react-icons/md";
 import { LandingPage } from "@/components/LandingPage";
 import { Description } from "@/components/Description";
 import { Steps } from "@/components/Steps";
-import PieChart from "@/components/Chart";
 
 export default function Home() {
 
   return (
    <div className=" ">
     <LandingPage/>
-     <PieChart positive={12} negative={4} neutral={5} />
+{/*      
     <Description/>
-    <Steps/>
+    <Steps/> */}
 
    </div>
   );
 }
+
+
+
+//  <span class="pie-wrap">
+// 	<span class="pie-r"><span></span></span>
+// 	<span class="pie-l"><span></span></span>
+// 	<span class="text">Now Loading</span>
+// </span>

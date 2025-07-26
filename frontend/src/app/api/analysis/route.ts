@@ -8,7 +8,7 @@ export async function POST(req:Request){
           const ai = new GoogleGenerativeAI(process.env.GOOGLE_GEN_API_KEY! );
     
            const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" });
-            
+                   console.log("they are comments",comments)
             const result = await model.generateContent( `
                         You are given a list of YouTube comments with details like username, comment text, likes, and timestamp.
 
@@ -28,30 +28,34 @@ export async function POST(req:Request){
                        
                             6. Return the result strictly in the following JSON format:
 
-                        {
-                            "summary": {
-                            "totalPositive": number,
-                            "totalNegative": number,
-                            "totalNeutral": number,
-                            "mostPositiveUser": "username"
-                            },
-                            "positiveUsers": ["user1", "user2", "..."],
-                            "negativeUsers": ["user3", "user4", "..."],
-                            "suggestionUsers": ["user5", "user6", "..."],
-                            "suggestions": [
                             {
-                                "username": "user5",
-                                "suggestion": "Add subtitles to improve accessibility."
-                            }
-                            ],
-                            "positivecomment": [
-                            {
-                                "username": "user5",
-                                "suggestion": "your video is very good."
-                            }
-                            ],
-
-                        }
+                                "summary": {
+                                    "totalPositive": number,
+                                    "totalNegative": number,
+                                    "totalNeutral": number,
+                                    "mostPositiveUser": "username"
+                                },
+                                "positiveUsers": ["user1", "user2", "..."],
+                                "negativeUsers": ["user3", "user4", "..."],
+                                "suggestionUsers": ["user5", "user6", "..."],
+                                "suggestions": [
+                                    {
+                                    "username": "user5",
+                                    "profilePic": "https://example.com/user5.jpg",
+                                    "comment": "Add subtitles to improve accessibility.",
+                                    "likes": 12,
+                                  
+                                    }
+                                ],
+                                "positivecomment": [
+                                    {
+                                    "username": "user1",
+                                    "profilePic": "https://example.com/user1.jpg",
+                                    "comment": "your video is very good.",
+                                    "likes": 25
+                                    }
+                                ]
+                                }
 
                         Here is the list of comments to analyze:
                         ${JSON.stringify(comments)}

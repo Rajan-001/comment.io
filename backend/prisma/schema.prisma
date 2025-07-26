@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model UserInfo{
+  id Int @id @default(autoincrement())
+  name String 
+  password String
+  createdAt DateTime
+  upadetAt DateTime @updatedAt
+ subscription  Subscription?
+ payment Payments[]
+}
+
+model Plan{
+  id Int @id @default(autoincrement())
+  name String @unique
+  price Int
+  description String
+  subsripiton Subscription[]
+  payment Payments?
+}
+
+model Subscription{
+    id Int @id @default(autoincrement())
+    userId Int @unique
+    planId Int
+    status String @default("active") 
+    startDate   DateTime   @default(now())
+  endDate     DateTime?
+  user        UserInfo       @relation(fields: [userId], references: [id])
+  plan        Plan       @relation(fields: [planId], references: [id])
+}
+
+
+model Payments{
+    id Int @id @default(autoincrement())
+    plan_Id Int @unique
+    User_Id Int
+    amount Float
+    paymentDate   DateTime    @default(now())
+    Payment_Status Status
+    user UserInfo @relation(fields:[User_Id],references: [id])
+   plan Plan @relation(fields: [plan_Id],references: [id])
+}
+
+
+
+
+
+enum Status{
+  Sucessful
+  failed
+  Retry
+}

@@ -4,13 +4,19 @@ import { GiLynxHead } from 'react-icons/gi'
 import { ImDownload2 } from 'react-icons/im'
 import { MdCollectionsBookmark } from 'react-icons/md'
 import Image from 'next/image'
+import PieChart from './Chart'
+import { CommentsAnalysis } from './CommentsAnalysis'
 type Props = {}
 
 export const LandingPage = (props: Props) => {
   const inputRef=useRef(null)
   const[comment,SetComment]=useState([{}])
   const key=process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
-  
+  const [analysisStatus,analysisCompleted]=useState(false)
+  const [checkedComment,SetCheckedComment]=useState({})
+  const [positiveCommentList,SetPositiveCommentList]=useState([])
+  const [suggestionList,SetSuggesstionList]=useState([])
+  const [negativeCommentList,SetNegativeCommentList]=useState([])
    const fetchData = async () => {
     const input = inputRef.current
     if (!input || !input.value) {
@@ -19,7 +25,8 @@ export const LandingPage = (props: Props) => {
     }
 
     try{
-      const res=await fetch("/api/comments",{
+    
+      const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/comments`,{
         method:"POST",
         headers: {
         'Content-Type': 'application/json',
@@ -41,7 +48,7 @@ export const LandingPage = (props: Props) => {
            });
            console.log(newComment)
       SetComment(newComment)
-        const analysis= await fetch("/api/analysis",{
+        const analysis= await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/analysis`,{
           method:"POST",
         headers: {
         'Content-Type': 'application/json',
@@ -49,9 +56,14 @@ export const LandingPage = (props: Props) => {
       body: JSON.stringify({ comments: newComment }),
       
         })
+   
+       const parsed=await analysis.json()
     
-       const {parsed}=await analysis.json()
-      console.log(parsed)
+       SetCheckedComment(parsed)
+      SetPositiveCommentList(parsed.positiveUsers)
+      SetSuggesstionList(parsed.suggestionUsers)
+      SetNegativeCommentList(parsed.negativeUsers)
+      analysisCompleted(true)
     } 
     
  catch (err) {
@@ -79,12 +91,12 @@ export const LandingPage = (props: Props) => {
                 Youtube Video Analyser
               </div>
             </div>
-            <div className="flex justify-center items-center w-full h-36 text-center">
+            <div className="flex justify-center items-center w-full h-36 text-center ">
               <input ref={inputRef} placeholder="Paste Your Youtube link" className="w-96 h-12 place-content-center "/>
               <button onClick={fetchData} className='h-6 w-24 bg-red-500'>Analyze</button>
             </div>
         
-            <div className="w-full h-96 flex px-24 flex-row bg-black">
+            <div className="w-full h-12 flex px-24 flex-row">
               <div>
                 <FaCopy className="text-white" />
               </div>
@@ -95,8 +107,16 @@ export const LandingPage = (props: Props) => {
                 <MdCollectionsBookmark />
               </div>
             </div>
+             {
+            analysisStatus &&
+            <div className='flex flex-row'>
+            <PieChart positive={checkedComment?.summary?.totalPositive||0} negative={checkedComment?.summary?.totalNegative||0} neutral={checkedComment?.summary?.totalNeutral||0} /> 
+            <CommentsAnalysis positiveCommentList={positiveCommentList} suggestionList={suggestionList} negativeCommentList={negativeCommentList}/>
+            </div>
+            }
            
            </div>
+          
     </div>
   )
 }
