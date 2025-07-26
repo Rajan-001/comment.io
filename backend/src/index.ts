@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
-
+import Razorpay from "razorpay";
 import cors from "cors"
 import { oauth2Client } from "./lib/google";
+import { prisma } from "./lib/prisma";
 
+const crypto = require('crypto');
 const app=express()
 app.use(express.json())
 
@@ -55,6 +57,31 @@ app.get("/auth/callback", async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Token exchange failed" });
   }
 });
+
+app.post("/signup", async (req: Request, res: Response) => {
+  try {
+    const { name, password } = req.body;
+ 
+    if (!name || !password) {
+      return res.status(400).json({ error: "Name and password are required" });
+    }
+  console.log(name)
+    // ✅ Prisma will auto-generate id
+    const user = await prisma.userInfo.create({
+      data: {
+        name,
+        password,
+        createdAt: new Date(),
+      },
+    });
+   console.log(user.id)
+    // ✅ Send back the id
+    res.status(201).json({ userId: user.id });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
 
 
 app.post("/api/analysis", async (req: Request, res: Response) => {
@@ -197,5 +224,87 @@ app.post("/api/comments", async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.post("/create-order", async (req, res) => {
+  try {
+    const { amount,planId,userId } = req.body; // Amount from frontend (in INR)
+    const razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_ID!,
+        key_secret: process.env.RAZORPAY_KEY_SECRET!,
+      });
+      
+    const options = {
+      amount: amount * 100, // amount in paisa
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
+    };
+
+    const order = await razorpay.orders.create(options);
+    const {currency,id,status}=order
+    const receipt = order.receipt ?? "default-receipt";
+    
+    await prisma.orders.create({
+      data:{  amount,
+       plan_Id:planId,
+        currency,
+        receipt,
+       status: "created",
+        order_Id:id,
+       User_Id: 1, 
+       
+      }
+    })
+    res.json(order);
+    console.log(order)
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error creating order");
+  }
+});
+
+app.post("/verify-payment", async (req, res) => {
+  try {
+const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, status } = req.body;
+   console.log(razorpay_order_id)
+    // 🔐 Create the signature to compare with Razorpay’s
+    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(sign.toString())
+      .digest("hex");
+
+    console.log("Generated Signature:", expectedSignature);
+    console.log("Received Signature:", razorpay_signature);
+
+    if (expectedSignature === razorpay_signature) {
+      console.log("✅ Payment Verified");
+
+      const payment = await prisma.payments.create({
+        data: {
+          orderId: orderId, // coming from frontend
+          razorpay_order_id: razorpay_order_id,
+          razorpay_payment_id: razorpay_payment_id,
+          razorpay_signature: razorpay_signature,
+          status: "success", // from your enum Status (SUCCESS, REFUNDED, FAILED)
+          paymentDate:new Date(),
+          order: {
+      connect: { order_Id: razorpay_order_id }
+    }
+        },
+      });
+
+      // 👉 Here you can update DB to mark the order as PAID
+      return res.json({ success: true });
+    } else {
+      console.log("❌ Signature mismatch! Possible fraud");
+      return res.status(400).json({ success: false });
+    }
+  } catch (error) {
+    console.error("❌ Verification Error:", error);
+    return res.status(500).json({ success: false});
+  }
+});
+
 
 app.listen(8000, () => console.log("✅ Backend running on http://localhost:8000"))
