@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -21,9 +21,11 @@ model UserInfo{
   name String 
   password String
   createdAt DateTime
-  upadetAt DateTime @updatedAt
+  upadatedAt DateTime @updatedAt
  subscription  Subscription?
  payment Payments[]
+
+  Orders Orders[]
 }
 
 model Plan{
@@ -31,8 +33,10 @@ model Plan{
   name String @unique
   price Int
   description String
-  subsripiton Subscription[]
-  payment Payments?
+  subsription Subscription[]
+  payment Payments[]
+
+  Orders Orders[]
 }
 
 model Subscription{
@@ -46,24 +50,45 @@ model Subscription{
   plan        Plan       @relation(fields: [planId], references: [id])
 }
 
+model Orders {
+  id                Int       @id @default(autoincrement())
+  plan_Id           Int
+  User_Id           Int
+  order_Id          String @unique
+  amount            Float
+  currency           String
+  receipt            String
+  status            OrderStatus @default(pending) // PENDING, PAID, FAILED
+  createdAt         DateTime  @default(now())
 
-model Payments{
-    id Int @id @default(autoincrement())
-    plan_Id Int @unique
-    User_Id Int
-    amount Float
-    paymentDate   DateTime    @default(now())
-    Payment_Status Status
-    user UserInfo @relation(fields:[User_Id],references: [id])
-   plan Plan @relation(fields: [plan_Id],references: [id])
+  payments          Payments[]
+  user UserInfo @relation(fields: [User_Id], references: [id])
+  plan Plan     @relation(fields: [plan_Id], references: [id])
+}
+
+model Payments {
+  id                Int       @id @default(autoincrement())
+  orderId           String
+  razorpay_payment_id String   @unique
+  razorpay_signature String?
+  status            OrderStatus @default(pending) // SUCCESS, REFUNDED, FAILED
+  paymentDate       DateTime  @default(now())
+  razorpay_order_id String    @unique
+  order Orders @relation(fields: [orderId], references: [order_Id])
+
+  UserInfo UserInfo[]
+
+  Plan Plan[]
 }
 
 
-
-
-
-enum Status{
-  Sucessful
+enum OrderStatus {
+  pending
+  success
   failed
-  Retry
+  created
+  attempted
+  paid
 }
+
+
