@@ -41,9 +41,9 @@ export const LandingPage = (props: Props) => {
       body: JSON.stringify({ videoUrl: input.value }),
       })
        const data = await res.json()
-      if (data.status === "SIGN_IN_REQUIRED") {
+      if (data.action === "SHOW_SIGNIN_POPUP") {
         setShowSignIn(true); // 🔥 Show sign-in modal
-      } else if (data.status === "PAYMENT_REQUIRED") {
+      } else if (data.action === "SHOW_PAYMENT_POPUP") {
         setShowPayment(true); // 🔥 Show payment modal
       } 
  
