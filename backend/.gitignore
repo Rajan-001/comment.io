@@ -29,3 +29,5 @@ build/
 .idea/
 
 /src/generated/prisma
+
+/src/generated/prisma

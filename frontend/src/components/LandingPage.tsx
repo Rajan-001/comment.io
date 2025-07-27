@@ -7,6 +7,8 @@ import Image from 'next/image'
 import PieChart from './Chart'
 import { CommentsAnalysis } from './CommentsAnalysis'
 import Link from 'next/link'
+import SignInModal from './SignIn'
+import PaymentModal from './PaymentModal'
 type Props = {}
 
 export const LandingPage = (props: Props) => {
@@ -18,6 +20,10 @@ export const LandingPage = (props: Props) => {
   const [positiveCommentList,SetPositiveCommentList]=useState([])
   const [suggestionList,SetSuggesstionList]=useState([])
   const [negativeCommentList,SetNegativeCommentList]=useState([])
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+
+
    const fetchData = async () => {
     const input = inputRef.current
     if (!input || !input.value) {
@@ -35,7 +41,11 @@ export const LandingPage = (props: Props) => {
       body: JSON.stringify({ videoUrl: input.value }),
       })
        const data = await res.json()
-      //  console.log(data.comments)
+      if (data.status === "SIGN_IN_REQUIRED") {
+        setShowSignIn(true); // 🔥 Show sign-in modal
+      } else if (data.status === "PAYMENT_REQUIRED") {
+        setShowPayment(true); // 🔥 Show payment modal
+      } 
  
      const newComment = data.comments.map((item: any) => {
         
@@ -119,6 +129,9 @@ export const LandingPage = (props: Props) => {
             <CommentsAnalysis positiveCommentList={positiveCommentList} suggestionList={suggestionList} negativeCommentList={negativeCommentList}/>
             </div>
             }
+          
+               { showSignIn && <SignInModal onClose={() => setShowSignIn(false)} />}
+      {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
            
            </div>
           

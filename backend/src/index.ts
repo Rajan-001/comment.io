@@ -5,6 +5,7 @@ import Razorpay from "razorpay";
 import cors from "cors"
 import { oauth2Client } from "./lib/google";
 import { prisma } from "./lib/prisma";
+import { checkVideoAnalysisLimit } from "./limit";
 
 const crypto = require('crypto');
 const app=express()
@@ -180,7 +181,7 @@ app.post("/api/analysis", async (req: Request, res: Response) => {
 });
 
 
-app.post("/api/comments", async (req: Request, res: Response) => {
+app.post("/api/comments",checkVideoAnalysisLimit, async (req: Request, res: Response) => {
   try {
     const { videoUrl } = req.body;
 
