@@ -8,12 +8,13 @@ import { MdCollectionsBookmark } from "react-icons/md";
 import { LandingPage } from "@/components/LandingPage";
 import { Description } from "@/components/Description";
 import { Steps } from "@/components/Steps";
+import SignInModal from "@/components/SignIn";
 
 export default function Home() {
 
   return (
    <div className=" ">
-    <LandingPage/>
+    <SignInModal/>
 {/*      
     <Description/>
     <Steps/> */}

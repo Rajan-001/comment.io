@@ -1,7 +1,7 @@
 import { prisma } from "./lib/prisma";
 import { redis } from "./lib/redis";
-
-export const checkVideoAnalysisLimit=async (req,res,next)=>{
+import { Request,Response,NextFunction } from "express";
+export const checkVideoAnalysisLimit=async (req:Request,res:Response,next:NextFunction)=>{
 
   
  try {
