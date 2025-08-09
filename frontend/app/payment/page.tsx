@@ -1,8 +1,9 @@
 "use client";
 
-import { PaymentFailureStatus } from "@/components/PaymentFailureStatus";
-import {  PaymentSuccessfulStatus } from "@/components/PaymentSuccessStatus";
+
 import React, { useEffect, useState } from "react";
+import { PaymentFailureStatus } from "../../components/PaymentFailureStatus";
+import { PaymentSuccessfulStatus } from "../../components/PaymentSuccessStatus";
 
 export default function PaymentPage() {
    const [paymentStatus, setPaymentStatus] = useState<"idle" | "success" | "failed">("idle");
@@ -121,7 +122,7 @@ useEffect(() => {
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className="bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between border hover:shadow-lg transition-all"
+            className="bg-white rounded-2xl  duration-300 p-6 flex flex-col justify-between border hover:shadow-xs transition-all shadow-[-5px_6px_16px_8px_#15803d]"
           >
             <div>
               <h2 className="text-2xl font-bold mb-2">{plan.name}</h2>
@@ -135,9 +136,9 @@ useEffect(() => {
             </div>
             <button
               onClick={() => handlePayment("Starter", 499)}
-              className={`w-full py-2 px-4 rounded-lg font-semibold ${plan.isFree
+              className={`w-full cursor-pointer py-2 px-4 rounded-lg font-semibold ${plan.isFree
                   ? "bg-green-500 text-white hover:bg-green-600"
-                  : "bg-blue-500 text-white hover:bg-blue-600"}`}
+                  : "bg-blue-600 text-white hover:bg-green-600"}`}
             >
               {plan.buttonText}
             </button>

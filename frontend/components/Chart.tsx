@@ -39,7 +39,7 @@ export default function PieChart({ positive, negative, neutral }: PieChartProps)
     },
   };
 
-  return <div className='w-52 h-52 '>
+  return <div className='w-56 h-56 '>
   <Pie data={data} options={options} />;
   </div>
 }

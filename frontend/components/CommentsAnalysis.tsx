@@ -47,7 +47,7 @@ export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCo
       {/* Tabs */}
       <div className="flex gap-4 bg-gray-100 p-3 rounded-md mb-4">
         <button
-          className={`px-4 py-2 rounded ${
+          className={`px-4 py-2 rounded cursor-pointer ${
             activeTab === "positive" ? "bg-green-500 text-white" : "bg-white"
           }`}
           onClick={() => setActiveTab("positive")}
@@ -55,7 +55,7 @@ export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCo
           Positive
         </button>
         <button
-          className={`px-4 py-2 rounded ${
+          className={`px-4 py-2 rounded cursor-pointer ${
             activeTab === "suggestion" ? "bg-blue-500 text-white" : "bg-white"
           }`}
           onClick={() => setActiveTab("suggestion")}
@@ -63,7 +63,7 @@ export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCo
           Suggestions
         </button>
         <button
-          className={`px-4 py-2 rounded ${
+          className={`px-4 py-2 rounded cursor-pointer ${
             activeTab === "negative" ? "bg-red-500 text-white" : "bg-white"
           }`}
           onClick={() => setActiveTab("negative")}

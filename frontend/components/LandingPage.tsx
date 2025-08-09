@@ -9,6 +9,10 @@ import { CommentsAnalysis } from './CommentsAnalysis'
 import Link from 'next/link'
 import SignInModal from './SignIn'
 import PaymentModal from './PaymentModal'
+import { Navbar } from './Navbar'
+import { Description } from './Description'
+import { Steps } from './Steps'
+import { Footer } from './Footer'
 type Props = {}
 
 export const LandingPage = (props: Props) => {
@@ -84,34 +88,20 @@ export const LandingPage = (props: Props) => {
 
 
   return (
-    <div>
-        <div className="w-screen h-screen relative ">
-            <div className="w-full px-24 flex flex-row h-18 backdrop-blur-2xl justify-between items-center">
-              <div className="w-auto "><Image width={30} height={30} src={"/youtube.png"} alt="Logo"/></div>
-              <div className="flex flex-row gap-x-2">
-                <div>Home</div>
-                <div>About</div>
-                <div>Features</div>
-                <div>FAQs</div>
-                <div>History</div>
-              </div>
-              <div>
-                <Link href="/payment">
-                <GiLynxHead className="w-8 h-8"  />
-                </Link>
-                </div>
-            </div>
+    <div className=''>
+        <div className="w-screen  relative ">
+               <Navbar/>
             <div className="flex justify-center items-center w-full h-1/5">
-              <div>
-                Youtube Video Analyser
+              <div className='text-5xl text-neutral-900 hover:text-red-400'>
+                Youtube Video Comment Analyser 
               </div>
             </div>
             <div className="flex justify-center items-center w-full h-36 text-center ">
-              <input ref={inputRef} placeholder="Paste Your Youtube link" className="w-96 h-12 place-content-center "/>
-              <button onClick={fetchData} className='h-6 w-24 bg-red-500'>Analyze</button>
+              <input ref={inputRef} placeholder="Paste Your Youtube link" className="w-110 h-12 pl-4 place-content-center border-2 active:border-red-400 border-neutral-900 hover:border-red-400 "/>
+              <button onClick={fetchData} className='h-12 rounded-3xl w-32 hover:cursor-pointer  bg-neutral-900 hover:bg-red-400 text-slate-200'>Analyze</button>
             </div>
         
-            <div className="w-full h-12 flex px-24 flex-row">
+            {/* <div className="w-full h-12 flex px-24 flex-row">
               <div>
                 <FaCopy className="text-white" />
               </div>
@@ -121,7 +111,11 @@ export const LandingPage = (props: Props) => {
               <div>
                 <MdCollectionsBookmark />
               </div>
-            </div>
+            </div> */}
+            <div className='loader-104'>
+
+          </div>
+           
              {
             analysisStatus &&
             <div className='flex flex-row'>
@@ -132,8 +126,16 @@ export const LandingPage = (props: Props) => {
           
                { showSignIn && <SignInModal onClose={() => setShowSignIn(false)} />}
       {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
-           
+              
+      
+            <Description/> 
+
+            <Steps/> 
            </div>
+           <div className='w-screen '>
+           
+          <Footer/>
+          </div>
           
     </div>
   )
