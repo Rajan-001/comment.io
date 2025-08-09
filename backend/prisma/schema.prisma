@@ -19,12 +19,13 @@ datasource db {
 model UserInfo{
   id Int @id @default(autoincrement())
   name String 
-  password String
+  password String?
+  email String?
   createdAt DateTime
   upadatedAt DateTime @updatedAt
  subscription  Subscription?
  payment Payments[]
-
+ provider String?
   Orders Orders[]
 }
 

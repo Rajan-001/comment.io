@@ -85,6 +85,64 @@ app.post("/signup", async (req: Request, res: Response) => {
 });
 
 
+app.post("/signin",async (req:Request,res:Response)=>{
+
+    try{
+         const response=await prisma.userInfo.findFirst({
+            where:{
+                name:req.body.name,
+                password:req.body.password,
+                email:req.body.email
+            }
+         })
+          //@ts-ignore
+         const token=jwt.sign({userId:response.id},process.env.JWT_SECRET!)
+       res.cookie("token", token, {
+            httpOnly: true,   // ✅ cannot be accessed via JS
+            secure: false,    // ✅ set to true only if you have HTTPS (you can change later)
+            sameSite: "strict" // ✅ prevents CSRF
+            });
+   res.status(200).json({
+        token
+       })
+    }
+    catch(err){
+        res.status(404).json({
+            Error:err
+        })
+    }
+})
+
+
+app.post("/social-site-signin",async(req:Request,res:Response)=>{
+  try{
+       const response=await prisma.userInfo.findFirst({
+        where:{
+               name:req.body.name,
+                email:req.body.email,
+                provider:req.body.provider
+            }
+         })
+          //@ts-ignore
+         const token=jwt.sign({userId:response.id},process.env.JWT_SECRET!)
+       res.cookie("token", token, {
+            httpOnly: true,   // ✅ cannot be accessed via JS
+            secure: false,    // ✅ set to true only if you have HTTPS (you can change later)
+            sameSite: "strict" // ✅ prevents CSRF
+            });
+       res.status(200).json({
+        token
+       })
+    }
+    catch(err){
+        res.status(404).json({
+            Error:err
+        })
+    }
+})
+
+
+
 
 app.post("/api/analysis", async (req: Request, res: Response) => {
   try {
