@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { RiTwitterXFill } from "react-icons/ri";
 import Login from "./Login";
+//@ts-ignore
 export default function SignUp({setSignUpModal,setLoginModal}) {
      const { data: session, status } =  useSession()
      const [email, setEmail] = useState("");
@@ -40,6 +41,7 @@ export default function SignUp({setSignUpModal,setLoginModal}) {
     const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/social-site-signin`,{
        method:"POST",
        headers:{ "Content-Type": "application/json" },
+       //@ts-ignore
        body:JSON.stringify({ name:session?.user?.name,email:session?.user?.email ,provider:session?.user?.provider })
     })
  const data = await res.json();

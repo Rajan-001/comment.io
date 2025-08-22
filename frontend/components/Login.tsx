@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { RiTwitterXFill } from "react-icons/ri";
-
+//@ts-ignore
 export default function Login({setSignUpModal,setLoginModal}) {
 
   const [name, setName] = useState("");

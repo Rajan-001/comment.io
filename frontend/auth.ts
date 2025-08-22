@@ -21,6 +21,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
    clientId: process.env.AUTH_TWITTER_ID!,
       // eslint-disable-next-line turbo/no-undeclared-env-vars
       clientSecret: process.env.AUTH_TWITTER_SECRET!,
+      //@ts-ignore
       version: "2.0" 
     })
    

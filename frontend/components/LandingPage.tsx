@@ -15,7 +15,7 @@ type Props = {}
 export const LandingPage = (props: Props) => {
   const inputRef=useRef(null)
   const[comment,SetComment]=useState([{}])
-  const key=process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
+
   const [analysisStatus,analysisCompleted]=useState(false)
   const [checkedComment,SetCheckedComment]=useState({})
   const [positiveCommentList,SetPositiveCommentList]=useState([])
@@ -27,6 +27,7 @@ export const LandingPage = (props: Props) => {
 
    const fetchData = async () => {
     const input = inputRef.current
+    //@ts-ignore
     if (!input || !input.value) {
       alert("Please enter a valid YouTube URL.")
       return
@@ -39,6 +40,7 @@ export const LandingPage = (props: Props) => {
         headers: {
         'Content-Type': 'application/json',
       },
+      //@ts-ignore
       body: JSON.stringify({ videoUrl: input.value }),
       })
        const data = await res.json()
@@ -111,8 +113,11 @@ export const LandingPage = (props: Props) => {
            
              {
             analysisStatus &&
+         
             <div className='flex flex-row'>
-            <PieChart positive={checkedComment?.summary?.totalPositive||0} negative={checkedComment?.summary?.totalNegative||0} neutral={checkedComment?.summary?.totalNeutral||0} /> 
+         
+            <PieChart positive={(checkedComment as any)?.summary?.totalPositive||0} negative={(checkedComment as any)?.summary?.totalNegative||0} neutral={(checkedComment as any)?.summary?.totalNeutral||0} /> 
+            
             <CommentsAnalysis positiveCommentList={positiveCommentList} suggestionList={suggestionList} negativeCommentList={negativeCommentList}/>
             </div>
             }

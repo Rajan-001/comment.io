@@ -3,7 +3,6 @@
 
 import { LandingPage } from "../components/LandingPage";
  import Providers from "../components/Providers";
-import SignUpIn from "../components/SignUpIn";
 
 
 export default function Home() {
@@ -13,9 +12,7 @@ export default function Home() {
    <Providers >
  
     <LandingPage/>
-{/*      
-    <Description/>
-    <Steps/> */}
+
 
 
     </Providers>

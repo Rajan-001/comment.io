@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCommentList}) => {
+export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCommentList}:{ positiveCommentList:any,suggestionList:any,negativeCommentList:any}) => {
   const [activeTab, setActiveTab] = useState("positive");
 
   const renderComments = () => {
@@ -11,7 +11,7 @@ export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCo
     if (activeTab === "suggestion") currentList = suggestionList;
     if (activeTab === "negative") currentList = negativeCommentList;
 
-    return currentList.map((item, index) => (
+    return currentList.map((item:any, index:number) => (
       <div
         key={index}
         className="flex items-start gap-3 p-3 border-b last:border-none bg-white rounded-md shadow-sm scroll-auto "

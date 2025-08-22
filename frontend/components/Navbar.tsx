@@ -45,10 +45,12 @@ export const Navbar = () => {
                               <Link
                                 href={href}
                                 onMouseEnter={(e) => {
+                                  //@ts-ignore
                                   const { width } = e.target.getBoundingClientRect();
                                   SetPosition({
                                     width,
                                     opacity: 1,
+                                    //@ts-ignore
                                     left: e.target.offsetLeft,
                                   });
                                 }}
