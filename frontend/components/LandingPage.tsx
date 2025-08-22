@@ -3,12 +3,13 @@ import React, { use, useEffect, useRef, useState } from 'react'
 import PieChart from './Chart'
 import { CommentsAnalysis } from './CommentsAnalysis'
 import Link from 'next/link'
-import SignInModal from './SignIn'
+
 import PaymentModal from './PaymentModal'
 import { Navbar } from './Navbar'
 import { Description } from './Description'
 import { Steps } from './Steps'
 import { Footer } from './Footer'
+import Login from './Login'
 type Props = {}
 
 export const LandingPage = (props: Props) => {
@@ -116,7 +117,7 @@ export const LandingPage = (props: Props) => {
             </div>
             }
           
-               { showSignIn && <SignInModal setSignUpModal={true} setLoginModal={false}  />}
+               { showSignIn && <Login setSignUpModal={true} setLoginModal={false}  />}
       {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
               
       
