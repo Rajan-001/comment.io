@@ -1,10 +1,13 @@
+"use client"
 import React from 'react'
 import { Footer } from '../../components/Footer'
 import { features } from '../../lib/features'
 import { Navbar } from '../../components/Navbar'
+import { useRouter } from 'next/navigation'
 
 
-export default function page  () {
+export default function Page  () {
+ const router=useRouter();
   return (
    <div className="flex flex-col">
   <div className="w-screen flex flex-col p-12 ">
@@ -38,7 +41,7 @@ export default function page  () {
       <div className="text-xl font-semibold mb-2">
         Start Analyzing Your Audience Today
       </div>
-      <button className="px-6 py-3 bg-red-600 text-white rounded-lg text-lg hover:bg-red-700 transition">
+      <button onClick={()=>router.push("/")} className="px-6 py-3 bg-red-600 text-white rounded-lg text-lg hover:bg-red-700 transition cursor-pointer">
         Try It Now
       </button>
     </div>

@@ -9,6 +9,7 @@ import SignUpIn from "../components/SignUpIn";
 export default function Home() {
 
   return (
+   
    <Providers >
  
     <LandingPage/>
@@ -18,6 +19,7 @@ export default function Home() {
 
 
     </Providers>
+ 
   );
 }
 
