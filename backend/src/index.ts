@@ -7,8 +7,9 @@ import cors from "cors"
 import { oauth2Client } from "./lib/google";
 import { prisma } from "./lib/prisma";
 import { checkVideoAnalysisLimit } from "./limit";
-
-
+import { middleware } from "./lib/middleware";
+import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken"
 const app=express()
 app.use(express.json())
 
@@ -17,7 +18,7 @@ app.use(cors({
   methods: ["GET", "POST"],
   credentials: true
 }));
-
+app.use(cookieParser())
 dotenv.config();
 
 app.get("/auth/login", (req: Request, res: Response) => {
@@ -92,23 +93,33 @@ app.post("/signin",async (req:Request,res:Response)=>{
             where:{
                 name:req.body.name,
                 password:req.body.password,
-                email:req.body.email
             }
          })
-          //@ts-ignore
-         const token=jwt.sign({userId:response.id},process.env.JWT_SECRET!)
-       res.cookie("token", token, {
+         console.log("Id ",response?.id)
+         console.log(process.env.JWT_SECRET!)
+         
+         const token=jwt.sign({userId:response?.id!},process.env.JWT_SECRET!)
+       console.log(token)
+         res.cookie("token", token, {
             httpOnly: true,   // ✅ cannot be accessed via JS
             secure: false,    // ✅ set to true only if you have HTTPS (you can change later)
-            sameSite: "strict" // ✅ prevents CSRF
+            sameSite:"lax" // ✅ prevents CSRF
             });
-   res.status(200).json({
-        token
-       })
+            console.log(token)
+               if(token)
+      {
+      res.status(200).json({
+        message:"able to do signIn"
+      })
+      }else{
+        res.status(407).json({
+            message:"Not able to create token"
+        })
     }
+  }
     catch(err){
         res.status(404).json({
-            Error:err
+            err
         })
     }
 })
@@ -128,7 +139,7 @@ app.post("/social-site-signin",async(req:Request,res:Response)=>{
        res.cookie("token", token, {
             httpOnly: true,   // ✅ cannot be accessed via JS
             secure: false,    // ✅ set to true only if you have HTTPS (you can change later)
-            sameSite: "strict" // ✅ prevents CSRF
+            sameSite: "lax" // ✅ prevents CSRF
             });
        res.status(200).json({
         token
@@ -285,9 +296,11 @@ app.post("/api/comments",checkVideoAnalysisLimit, async (req: Request, res: Resp
   }
 });
 
-app.post("/create-order", async (req, res) => {
+app.post("/create-order",middleware, async (req, res) => {
   try {
-    const { amount,planId,userId } = req.body; // Amount from frontend (in INR)
+    //@ts-ignore
+   
+    const { amount,planId } = req.body; // Amount from frontend (in INR)
     const razorpay = new Razorpay({
         key_id: process.env.RAZORPAY_ID!,
         key_secret: process.env.RAZORPAY_KEY_SECRET!,
@@ -298,37 +311,67 @@ app.post("/create-order", async (req, res) => {
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
-
+   
+ //@ts-ignore
+ console.log("Request id",req.id)
     const order = await razorpay.orders.create(options);
     const {currency,id,status}=order
+    console.log("this is create order",order)
     const receipt = order.receipt ?? "default-receipt";
     
-    await prisma.orders.create({
+   const response= await prisma.orders.create({
       data:{  amount,
-       plan_Id:planId,
+      
         currency,
         receipt,
        status: "created",
         order_Id:id,
-       User_Id: 1, 
-       
+        //@ts-ignore
+      //  User_Id: req.id, 
+       user:
+       {
+        connect:{
+          //@ts-ignore
+          id:req.id
+       }
+      },
+      plan:{
+        connect:{
+      //@ts-ignore
+        id:planId
+        }
+      }
       }
     })
-    res.json(order);
-    console.log(order)
+    console.log("respnose from create order",response)
+    if(response){
+      res.status(200).json({
+          response
+      })
+    }
+    else{
+      res.status(503).json({
+        message:"not able to create order"
+      })
+    }
+    
   } catch (error) {
     console.log(error);
-    res.status(500).send("Error creating order");
+    res.status(503).json(
+      {
+      message:"Error creating order"
+      }
+    );
   }
 });
 
-app.post("/verify-payment", async (req, res) => {
+app.post("/verify-payment",middleware, async (req, res) => {
   try {
-const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, status } = req.body;
+const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, status,planId } = req.body;
    console.log(razorpay_order_id)
     // 🔐 Create the signature to compare with Razorpay’s
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
-
+  
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(sign.toString())
@@ -336,13 +379,15 @@ const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, sta
 
     console.log("Generated Signature:", expectedSignature);
     console.log("Received Signature:", razorpay_signature);
-
+    const startDate=new Date();
+    const endDate=new Date(startDate);
+    endDate.setFullYear(endDate.getFullYear()+1)
     if (expectedSignature === razorpay_signature) {
       console.log("✅ Payment Verified");
 
       const payment = await prisma.payments.create({
         data: {
-          orderId: orderId, // coming from frontend
+          // orderId: orderId, // coming from frontend
           razorpay_order_id: razorpay_order_id,
           razorpay_payment_id: razorpay_payment_id,
           razorpay_signature: razorpay_signature,
@@ -352,10 +397,32 @@ const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, sta
       connect: { order_Id: razorpay_order_id }
     }
         },
-      });
-
-      // 👉 Here you can update DB to mark the order as PAID
+      }); 
+      if(payment.status=="success")
+      {
+        const subscribe=await prisma.subscription.create({
+          data:{
+            user:{
+              connect:{
+                //@ts-ignore
+                id:req.id
+              }
+            },
+            plan:{
+              connect:{
+                id:planId
+              }
+            },
+            endDate
+          }
+        })
+        if(subscribe)
+        {
       return res.json({ success: true });
+        }
+        
+      }
+      // 👉 Here you can update DB to mark the order as PAID
     } else {
       console.log("❌ Signature mismatch! Possible fraud");
       return res.status(400).json({ success: false });

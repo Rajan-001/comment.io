@@ -1,3 +1,4 @@
+import { middleware } from "./lib/middleware";
 import { prisma } from "./lib/prisma";
 import { redis } from "./lib/redis";
 import { Request,Response,NextFunction } from "express";
@@ -6,7 +7,8 @@ export const checkVideoAnalysisLimit=async (req:Request,res:Response,next:NextFu
   
  try {
     const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-    const userId = req.user?.id; // if using auth middleware (optional)
+    middleware;
+    const userId = req?.id!; // if using auth middleware (optional)
     let activePlan;
     // ✅ 1️⃣ If user is logged in and has an active plan → allow unlimited
     if (userId) {

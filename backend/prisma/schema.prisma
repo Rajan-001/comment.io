@@ -17,7 +17,7 @@ datasource db {
 
 
 model UserInfo{
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) @unique
   name String 
   password String?
   email String?
@@ -30,7 +30,7 @@ model UserInfo{
 }
 
 model Plan{
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) @unique
   name String @unique
   price Int
   description String
@@ -53,8 +53,8 @@ model Subscription{
 
 model Orders {
   id                Int       @id @default(autoincrement())
-  plan_Id           Int
-  User_Id           Int
+  plan_Id           Int 
+  User_Id           Int 
   order_Id          String @unique
   amount            Float
   currency           String
