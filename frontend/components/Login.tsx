@@ -1,19 +1,22 @@
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { RiTwitterXFill } from "react-icons/ri";
 
 export default function Login({setSignUpModal,setLoginModal}) {
 
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-
+    const router=useRouter()
   
   async function handleLogin() {
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/signin`, {
         method: "POST",
+       credentials:"include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password}),
+        body: JSON.stringify({ name, password}),
       });
 
       const data = await res.json();
@@ -22,10 +25,10 @@ export default function Login({setSignUpModal,setLoginModal}) {
         return;
       }
 
-      alert("✅ Signup successful!");
+      router.push("/payment")
     } catch (error) {
       console.error(error);
-      alert("Something went wrong.");
+      alert("Please check your Name and Password.");
     }
   }
 
@@ -41,11 +44,11 @@ export default function Login({setSignUpModal,setLoginModal}) {
 
         {/* Email Input */}
         <div className="mb-4">
-          <label className="block text-slate-200 text-sm font-semibold mb-2">Email</label>
+          <label className="block text-slate-200 text-sm font-semibold mb-2">Name</label>
           <input 
-            onChange={(e) => setEmail(e.target.value)} 
-            type="email" 
-            placeholder="Enter your email" 
+            onChange={(e) => setName(e.target.value)} 
+            type="text" 
+            placeholder="Enter your name" 
             className="w-full p-3 border-2 border-slate-200 text-slate-900 rounded-xl text-base 
                        bg-white/80 focus:border-indigo-500 focus:bg-white transform 
                        transition-all duration-300 focus:translate-y-[-2px] focus:shadow-lg 

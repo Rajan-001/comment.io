@@ -20,4 +20,3 @@
             text: "We’re constantly adding new capabilities — from analyzing thousands of comments per video to expanding across platforms like Reddit and TikTok."
           }
 ]
-module.exports=features

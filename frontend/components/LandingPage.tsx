@@ -1,9 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { FaCopy } from 'react-icons/fa'
-import { GiLynxHead } from 'react-icons/gi'
-import { ImDownload2 } from 'react-icons/im'
-import { MdCollectionsBookmark } from 'react-icons/md'
-import Image from 'next/image'
+import React, { use, useEffect, useRef, useState } from 'react'
+
 import PieChart from './Chart'
 import { CommentsAnalysis } from './CommentsAnalysis'
 import Link from 'next/link'
@@ -26,7 +22,7 @@ export const LandingPage = (props: Props) => {
   const [negativeCommentList,SetNegativeCommentList]=useState([])
   const [showSignIn, setShowSignIn] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
-
+  const [loading,Setloading]=useState(false)
 
    const fetchData = async () => {
     const input = inputRef.current
@@ -36,7 +32,7 @@ export const LandingPage = (props: Props) => {
     }
 
     try{
-    
+      Setloading(true)
       const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/comments`,{
         method:"POST",
         headers: {
@@ -65,6 +61,7 @@ export const LandingPage = (props: Props) => {
       SetComment(newComment)
         const analysis= await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/analysis`,{
           method:"POST",
+          credentials:"include",
         headers: {
         'Content-Type': 'application/json',
       },
@@ -79,6 +76,7 @@ export const LandingPage = (props: Props) => {
       SetSuggesstionList(parsed.suggestionUsers)
       SetNegativeCommentList(parsed.negativeUsers)
       analysisCompleted(true)
+      Setloading(false)
     } 
     
  catch (err) {
@@ -97,24 +95,18 @@ export const LandingPage = (props: Props) => {
               </div>
             </div>
             <div className="flex justify-center items-center w-full h-36 text-center ">
-              <input ref={inputRef} placeholder="Paste Your Youtube link" className="w-110 h-12 pl-4 place-content-center border-2 active:border-red-400 border-neutral-900 hover:border-red-400 "/>
-              <button onClick={fetchData} className='h-12 rounded-3xl w-32 hover:cursor-pointer  bg-neutral-900 hover:bg-red-400 text-slate-200'>Analyze</button>
+              <input ref={inputRef} placeholder="Paste Your Youtube link" className="w-110 h-12 rounded-full pl-8 place-content-center border-2 active:border-red-400 border-neutral-900 hover:border-red-400 "/>
+              <button onClick={fetchData} className='h-12 ml-2 rounded-3xl w-32 hover:cursor-pointer  bg-neutral-900 hover:bg-red-400 text-slate-200'>Analyze</button>
             </div>
         
-            {/* <div className="w-full h-12 flex px-24 flex-row">
-              <div>
-                <FaCopy className="text-white" />
-              </div>
-              <div>
-                <ImDownload2 />
-              </div>
-              <div>
-                <MdCollectionsBookmark />
-              </div>
-            </div> */}
-            <div className='loader-104'>
 
-          </div>
+           { loading &&
+           <div className='h-38 w-screen flex justify-center items-center'>
+           <div className='loader-105'>
+            </div>
+            </div>
+           }
+
            
              {
             analysisStatus &&
@@ -124,7 +116,7 @@ export const LandingPage = (props: Props) => {
             </div>
             }
           
-               { showSignIn && <SignInModal onClose={() => setShowSignIn(false)} />}
+               { showSignIn && <SignInModal setSignUpModal={true} setLoginModal={false}  />}
       {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
               
       

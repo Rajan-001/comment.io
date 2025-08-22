@@ -32,7 +32,7 @@ export const Navbar = () => {
                         <motion.div
                           key={i}
                             
-                          className="flex h-full gap-x-2 px-4 w-fit border-2 border-neutral-900 hover:border-red-400 relative text-xl rounded-3xl items-center backdrop-blur-sm   text-neutral-900"
+                          className="flex h-full gap-x-2 px-4 w-fit border-2 border-neutral-900 hover:border-red-400 relative text-lg rounded-3xl items-center backdrop-blur-sm   text-neutral-900"
                         >
                           <motion.div
                             className="bg-red-500 absolute h-4/5 rounded-3xl my-2 z-10  "
@@ -41,7 +41,7 @@ export const Navbar = () => {
                           ></motion.div>
 
                           {item?.items?.map(({ label, href }) => (
-                            <motion.div key={href} className="z-20">
+                            <motion.div key={href} className="z-20 px-2">
                               <Link
                                 href={href}
                                 onMouseEnter={(e) => {

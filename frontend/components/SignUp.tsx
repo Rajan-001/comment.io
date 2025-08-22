@@ -26,6 +26,7 @@ export default function SignUp({setSignUpModal,setLoginModal}) {
         return;
       }
      setLoginModal(true)
+     setSignUpModal(false)
      
     } catch (error) {
       console.error(error);
