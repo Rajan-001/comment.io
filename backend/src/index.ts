@@ -434,4 +434,11 @@ const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, sta
 });
 
 
-app.listen(8000, () => console.log("✅ Backend running on http://localhost:8000"))
+// app.listen(8000, () => console.log("✅ Backend running on http://localhost:8000"))
+
+const PORT = process.env.PORT || 8000;
+
+
+app.listen(PORT, () => {
+  console.log(`✅ Backend running on http://localhost:${PORT}`);
+});
