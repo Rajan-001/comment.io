@@ -14,7 +14,7 @@ const app=express()
 app.use(express.json())
 
 app.use(cors({
-  origin: "http://localhost:3000", // allow frontend URL
+  origin: "https://comment-io.vercel.app", // allow frontend URL
   methods: ["GET", "POST"],
   credentials: true
 }));
