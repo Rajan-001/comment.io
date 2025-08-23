@@ -8,6 +8,7 @@ export const checkVideoAnalysisLimit=async (req:Request,res:Response,next:NextFu
  try {
     const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
     middleware;
+    //@ts-ignore
     const userId = req?.id!; // if using auth middleware (optional)
     let activePlan;
     // ✅ 1️⃣ If user is logged in and has an active plan → allow unlimited
