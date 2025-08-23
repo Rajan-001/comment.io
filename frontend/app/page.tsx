@@ -8,14 +8,16 @@ import { LandingPage } from "../components/LandingPage";
 export default function Home() {
 
   return (
-   
-   <Providers >
+   <div className="bg-black w-screen h-screen">
+
+   </div>
+  //  <Providers >
  
-    <LandingPage/>
+  //   <LandingPage/>
 
 
 
-    </Providers>
+  //   </Providers>
  
   );
 }
