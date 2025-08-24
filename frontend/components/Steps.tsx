@@ -1,8 +1,8 @@
 import React from 'react'
 
-type Props = {}
 
-export const Steps = (props: Props) => {
+
+export const Steps = () => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-12 px-4 text-slate-800 max-w-7xl mx-auto">
   {/* Step 1 */}

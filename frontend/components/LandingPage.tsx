@@ -2,7 +2,6 @@ import React, { use, useEffect, useRef, useState } from 'react'
 
 import PieChart from './Chart'
 import { CommentsAnalysis } from './CommentsAnalysis'
-import Link from 'next/link'
 
 import PaymentModal from './PaymentModal'
 import { Navbar } from './Navbar'

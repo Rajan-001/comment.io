@@ -70,7 +70,7 @@ const handlePayment = async (plan: string, amount: number,planId:number) => {
       body: JSON.stringify({ amount,planId:planId}),
     });
     // console.log(plan_Id)
-    let order = await res.json();
+    const order = await res.json();
      if(res.status==411)
      {
       router.push("/profile")
@@ -91,6 +91,7 @@ const handlePayment = async (plan: string, amount: number,planId:number) => {
       name: `${plan} Plan`,
       description: `Payment for ${plan} Plan`,
       order_id: order.response.order_Id, // ✅ Razorpay order_id from backend
+   
       handler: async function (response: any) {
          console.log("options",options)
         console.log("✅ Razorpay Response:", response.razorpay_signature);

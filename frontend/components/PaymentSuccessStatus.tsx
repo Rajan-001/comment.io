@@ -3,9 +3,8 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
 
-type Props = {}
 
-export const PaymentSuccessfulStatus = (props: Props) => {
+export const PaymentSuccessfulStatus = () => {
   const router=useRouter()
   return (
    
