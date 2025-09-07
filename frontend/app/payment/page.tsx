@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { PaymentFailureStatus } from "../../components/PaymentFailureStatus";
 import { PaymentSuccessfulStatus } from "../../components/PaymentSuccessStatus";
 import { useRouter } from "next/navigation";
+import { Navbar } from "../../components/Navbar";
+import { TiTick } from "react-icons/ti";
+import { CiCirclePlus } from "react-icons/ci";
 
 export default function PaymentPage() {
    const [paymentStatus, setPaymentStatus] = useState<"idle" | "success" | "failed">("idle");
@@ -17,9 +20,9 @@ export default function PaymentPage() {
       price: 0,
       description: "Perfect for individuals exploring our service.",
       features: [
-        "✔ Access to basic tutorials",
-        "✔ Community support",
-        "✔ Limited to 5 projects",
+        " Access to basic tutorials",
+        " Community support",
+        " Limited to 5 projects",
       ],
       buttonText: "Get Started",
       isFree: true,
@@ -30,10 +33,15 @@ export default function PaymentPage() {
       price: 3,
       description: "Great for small teams or freelancers starting out.",
       features: [
-        "✔ Access to all tutorials",
-        "✔ Email support",
-        "✔ 20 projects limit",
-        "✔ Basic analytics",
+        " Access to all tutorials",
+        " Email support",
+        " 20 projects limit",
+        " Basic analytics",
+      ],
+      details:[
+        "Regular updates",
+    "Cross-device access",
+    "Simple customization options"
       ],
       buttonText: "Buy Starter",
       isFree: false,
@@ -44,11 +52,11 @@ export default function PaymentPage() {
       price: 5,
       description: "Best for businesses and pro developers.",
       features: [
-        "✔ All Starter features",
-        "✔ Unlimited projects",
-        "✔ Priority support",
-        "✔ Advanced analytics",
-        "✔ Access to beta features",
+        " All Starter features",
+        " Unlimited projects",
+        " Priority support",
+        " Advanced analytics",
+        " Access to beta features",
       ],
       buttonText: "Buy Professional",
       isFree: false,
@@ -144,35 +152,51 @@ useEffect(() => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10">
-     { paymentStatus === "idle" && <><h1 className="text-4xl font-bold mb-2">Choose Your Plan</h1><p className="text-gray-600 mb-8">Upgrade anytime as your needs grow.</p><div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-5">
+      <Navbar/>
+     { paymentStatus === "idle" && <><h1 className="text-4xl font-bold mb-2 my-2">Choose Your Plan</h1><p className="text-gray-600 mb-8">Upgrade anytime as your needs grow.</p><div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className="bg-white rounded-2xl  duration-300 p-6 flex flex-col justify-between border hover:shadow-xs transition-all shadow-[-5px_6px_16px_8px_#15803d]"
+            className={` rounded-2xl h-fit duration-300 p-6 flex flex-col justify-between border hover:shadow-xs transition-all ${plan.id===2?"bg-red-600 text-slate-200":"bg-slate-200 "}`}
           >
             <div>
               <h2 className="text-2xl font-bold mb-2">{plan.name}</h2>
-              <p className="text-gray-700 mb-4">{plan.description}</p>
+              <p className=" mb-4">{plan.description}</p>
               <p className="text-3xl font-extrabold mb-4">₹{plan.price}/month</p>
-              <ul className="text-gray-600 space-y-2 mb-6">
-                {plan.features.map((feature, index) => (
-                  <li key={index}>✅ {feature}</li>
-                ))}
-              </ul>
-            </div>
-            <button
+                 <button
               onClick={() =>{ SetPlanId(plan.id); handlePayment(plan.name, plan.price,plan.id)}}
-              className={`w-full cursor-pointer py-2 px-4 rounded-lg font-semibold ${plan.isFree
-                  ? "bg-green-500 text-white hover:bg-green-600"
-                  : "bg-blue-600 text-white hover:bg-green-600"}`}
+              className={`w-full cursor-pointer py-3  px-4 mt-4 rounded-3xl font-semibold  ${plan.id===2?"bg-slate-100 text-red-500":"bg-red-600 text-slate-100"}`}
             >
               {plan.buttonText}
             </button>
+              <ul className=" space-y-2 mb-6 mt-4">
+                {plan.features.map((feature, index) => (
+                  <li key={index} className=""><TiTick className={`inline-block p-1 text-xl ${plan.id===2?"bg-slate-100 text-red-500":"bg-red-500 text-slate-100"} rounded-full`} /> {feature}</li>
+                ))}
+              </ul>
+
+             { 
+              plan.details &&
+             <div className="w-full h-[2px] bg-slate-100 flex justify-center items-center">
+               <CiCirclePlus className={`h-6 w-6 rounded-full ${plan.id===2?"bg-slate-100 text-red-500":""}`} />
+             </div>
+               }
+
+               <ul className=" space-y-2 mb-6 mt-4">
+                {plan.details?.map((feature, index) => (
+                  <li key={index} className=""><TiTick className={`inline-block p-1 text-xl ${plan.id===2?"bg-slate-100 text-red-500":"bg-red-500 text-slate-100"} rounded-full`} /> {feature}</li>
+                ))}
+              </ul>
+            </div>
+         
           </div>
         ))}
+
+
       </div></>
       }
+    
        {paymentStatus === "success" && <PaymentSuccessfulStatus />}
       {paymentStatus === "failed" && <PaymentFailureStatus />}
     </div>

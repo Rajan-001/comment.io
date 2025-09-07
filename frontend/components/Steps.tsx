@@ -4,7 +4,7 @@ import React from 'react'
 
 export const Steps = () => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-12 px-4 text-slate-800 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 mt-8 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-12 px-4 text-slate-800 max-w-7xl mx-auto">
   {/* Step 1 */}
   <div className="p-6 rounded-xl shadow-md bg-white hover:shadow-lg transition drop-shadow-[0_2px_2px_rgba(71.4% 0.203 305.504)]">
     <h3 className="text-lg font-bold mb-2 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">

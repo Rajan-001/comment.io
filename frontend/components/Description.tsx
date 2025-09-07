@@ -12,19 +12,19 @@ type Props = {}
 
 export const Description = (props: Props) => {
   return (
-   <div className="flex flex-col px-12 py-16 items-center  text-slate-800">
+   <div className="flex flex-col px-12 z-2 py-16 items-center  text-slate-800 ">
   {/* Header */}
-  <h1 className="text-4xl font-black mb-6 text-center">
+  <h1 className="text-4xl  mb-6 text-center text-neutral-800 font-bold">
     🎥 The YouTube Comment Analyzer
   </h1>
 
   {/* Description */}
-  <p className="max-w-3xl text-center text-lg font-normal text-slate-600 mb-12 leading-normal">
+  <p className="max-w-3xl text-center text-lg font-normal text-neutral-900 mb-12 leading-normal">
     The YouTube Comment Analyzer is a powerful web-based tool that uses natural language processing (NLP) to automatically fetch, analyze, and visualize comments from any YouTube video. It highlights sentiment trends, filters spam, surfaces top keywords, and delivers smart summaries — all in one beautiful dashboard.
   </p>
 
   {/* Features */}
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+  <div className="grid grid-cols-1 mt-28 md:grid-cols-3 gap-8 w-full max-w-6xl">
     
     {/* Feature 1 */}
     <div className="bg-white p-6 rounded-2xl shadow-2xl hover:shadow-lg transition group shadow-red-300">

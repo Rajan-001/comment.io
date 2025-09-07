@@ -89,18 +89,22 @@ export const LandingPage = (props: Props) => {
 
   return (
     <div className=''>
-        <div className="w-screen  relative ">
+        <div className="w-screen  relative  backdrop-blur-3xl">
+
                <Navbar/>
-            <div className="flex justify-center items-center w-full h-1/5">
+       <div className='w-screen'>
+        
+            <div className="flex justify-center items-center w-full h-1/5 mt-8">
               <div className='text-5xl text-neutral-900 hover:text-red-400'>
                 Youtube Video Comment Analyser 
               </div>
             </div>
-            <div className="flex justify-center items-center w-full h-36 text-center ">
+            <div className="flex justify-center items-center w-full h-36 text-center  ">
               <input ref={inputRef} placeholder="Paste Your Youtube link" className="w-110 h-12 rounded-full pl-8 place-content-center border-2 active:border-red-400 border-neutral-900 hover:border-red-400 "/>
               <button onClick={fetchData} className='h-12 ml-2 rounded-3xl w-32 hover:cursor-pointer  bg-neutral-900 hover:bg-red-400 text-slate-200'>Analyze</button>
             </div>
         
+    
 
            { loading &&
            <div className='h-38 w-screen flex justify-center items-center'>
@@ -124,10 +128,23 @@ export const LandingPage = (props: Props) => {
                { showSignIn && <Login setSignUpModal={true} setLoginModal={false}  />}
       {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
               
-      
+           <div className='relative w-screen '>
+             <section className='absolute top-1/4 left-1/2 h-[80vh]'>
+            <div className="container -z-10">
+            <div className="blur">
+              <div className="gradient-mask">
+                <div className="spinning-gradient"></div>
+              </div>
+            </div>
+            </div>
+            </section>
+          
             <Description/> 
+            
 
-            <Steps/> 
+            <Steps/>
+            </div>
+            </div> 
            </div>
            <div className='w-screen '>
            

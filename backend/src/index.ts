@@ -13,13 +13,30 @@ import jwt from "jsonwebtoken"
 const app=express()
 app.use(express.json())
 
-app.use(cors({
-  origin: "https://comment-io.vercel.app", // allow frontend URL
-  methods: ["GET", "POST"],
-  credentials: true
-}));
+
+const allowedOrigins = [
+  "https://comment-io.vercel.app",
+  "http://localhost:3000"
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // allow requests with no origin (like mobile apps / curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
 app.use(cookieParser())
 dotenv.config();
+// allow preflight for all routes
 
 app.get("/auth/login", (req: Request, res: Response) => {
   try {

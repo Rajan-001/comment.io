@@ -13,7 +13,7 @@ export const Navbar = () => {
   const [position,SetPosition]=useState({width:0,left:0,opacity:0})
   return (
     <div className='w-screen  flex justify-center items-center '>
-   <div className="w-[calc(100vw-200px)] flex flex-row m-6 h-16 backdrop-blur-2xl justify-between items-center  ">
+   <div className="w-[calc(100vw-200px)] flex flex-row m-6 h-16 justify-between items-center  ">
               {
                 navItems.map((item,i)=>{
                       if (item.type === "image") 
@@ -32,10 +32,10 @@ export const Navbar = () => {
                         <motion.div
                           key={i}
                             
-                          className="flex h-full gap-x-2 px-4 w-fit border-2 border-neutral-900 hover:border-red-400 relative text-lg rounded-3xl items-center backdrop-blur-sm   text-neutral-900"
+                          className="flex py-3 backdrop-blur-2xl  gap-x-1 px-2 w-fit border-2 border-neutral-900 hover:border-red-400 relative text-lg rounded-4xl items-center   text-neutral-900"
                         >
                           <motion.div
-                            className="bg-red-500 absolute h-4/5 rounded-3xl my-2 z-10  "
+                            className="bg-red-500 absolute h-4/5 rounded-3xl z-10  "
                             animate={position}
                             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                           ></motion.div>
@@ -60,9 +60,9 @@ export const Navbar = () => {
                                   opacity: 0,
                                 }));
                               }}                      
-                                className="w-full h-full py-2 flex justify-center items-center hover:text-slate-200"
+                                className="w-full h-full  flex justify-center items-center hover:text-slate-200"
                               >
-                                <motion.div className="cursor-pointer px-2 py-1  transition-colors duration-200">
+                                <motion.div className="cursor-pointer text-sm px-4 py-0.5 font-bold transition-colors duration-200">
                                   {label}
                                 </motion.div>
                               </Link>

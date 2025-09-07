@@ -14,7 +14,7 @@ export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCo
     return currentList.map((item:any, index:number) => (
       <div
         key={index}
-        className="flex items-start gap-3 p-3 border-b last:border-none bg-white rounded-md shadow-sm scroll-auto "
+        className="flex items-start gap-3 p-3 border-b backdrop-blur-3xl last:border-none bg-slate-200 rounded-2xl shadow-sm scroll-auto "
       >
         {/* Profile Picture */}
         <img
@@ -45,7 +45,7 @@ export const CommentsAnalysis = ({ positiveCommentList,suggestionList,negativeCo
   return (
     <div className="w-[60vw] mx-auto">
       {/* Tabs */}
-      <div className="flex gap-4 bg-gray-100 p-3 rounded-md mb-4">
+      <div className="flex gap-4 bg-slate-100 backdrop-blur-3xl  p-3 rounded-2xl mb-4">
         <button
           className={`px-4 py-2  cursor-pointer  rounded-3xl ${
             activeTab === "positive" ? "bg-green-500 text-white" : "bg-white"
