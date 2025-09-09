@@ -16,6 +16,7 @@ const containerRef=useRef(null)
  {
   if(containerRef.current)
   {
+    //@ts-ignore
       const rect = containerRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left - 48; // 48 is half of 96 (div size)
     const mouseY = e.clientY - rect.top - 48;
