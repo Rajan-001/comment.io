@@ -2,7 +2,7 @@
 import React from "react";
 import { Footer } from "../../components/Footer";
 import { Navbar } from "../../components/Navbar";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Users, Search, BarChart, Sparkles, Mail } from "lucide-react";
 
 export default function Page() {
@@ -18,7 +18,7 @@ export default function Page() {
   };
 
   // Variants for text blocks
-  const fadeUp = {
+  const fadeUp:Variants  = {
     hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
     show: {
       opacity: 1,
@@ -54,6 +54,7 @@ export default function Page() {
         <hr className="border-gray-200" />
 
         {/* Audience Understanding */}
+      
         <motion.div variants={fadeUp} className="flex flex-col gap-y-3">
           <div className="text-3xl font-semibold flex items-center gap-3">
             <Search className="w-10 h-10 p-2 m-2 rounded-full bg-red-100 text-red-500 shadow-md animate-spin" />
