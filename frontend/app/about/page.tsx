@@ -55,7 +55,7 @@ export default function Page() {
 
         {/* Audience Understanding */}
       
-        <motion.div variants={fadeUp} className="flex flex-col gap-y-3">
+        <motion.div variants={fadeUp} className="flex flex-col gap-y-3 ">
           <div className="text-3xl font-semibold flex items-center gap-3">
             <Search className="w-10 h-10 p-2 m-2 rounded-full bg-red-100 text-red-500 shadow-md animate-spin" />
             Understand Your Audience Like Never Before

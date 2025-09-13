@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Navbar } from "../../components/Navbar";
 import { TiTick } from "react-icons/ti";
 import { CiCirclePlus } from "react-icons/ci";
+import { Footer } from "../../components/Footer";
 
 export default function PaymentPage() {
    const [paymentStatus, setPaymentStatus] = useState<"idle" | "success" | "failed">("idle");
@@ -152,13 +153,13 @@ useEffect(() => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-5">
+    <div className="min-h-screen bg-yellow-50 flex flex-col items-center py-5">
       <Navbar/>
      { paymentStatus === "idle" && <><h1 className="text-4xl font-bold mb-2 my-2">Choose Your Plan</h1><p className="text-gray-600 mb-8">Upgrade anytime as your needs grow.</p><div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className={` rounded-2xl h-fit duration-300 p-6 flex flex-col justify-between border hover:shadow-xs transition-all ${plan.id===2?"bg-red-600 text-slate-200":"bg-slate-200 "}`}
+            className={` shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] rounded-2xl  h-fit duration-300 p-6 flex flex-col justify-between border-3 border-black hover:shadow-xs transition-all ${plan.id===2?"bg-red-600 text-slate-200":"bg-slate-200 "}`}
           >
             <div>
               <h2 className="text-2xl font-bold mb-2">{plan.name}</h2>
@@ -166,7 +167,7 @@ useEffect(() => {
               <p className="text-3xl font-extrabold mb-4">₹{plan.price}/month</p>
                  <button
               onClick={() =>{ SetPlanId(plan.id); handlePayment(plan.name, plan.price,plan.id)}}
-              className={`w-full cursor-pointer py-3  px-4 mt-4 rounded-3xl font-semibold  ${plan.id===2?"bg-slate-100 text-red-500":"bg-red-600 text-slate-100"}`}
+              className={`w-full shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]  duration-300 transition-all border-2 hover:shadow-md border-black cursor-pointer py-3  px-4 mt-4 rounded-3xl font-semibold  ${plan.id===2?"bg-slate-100 text-red-500":"bg-red-600 text-slate-100"}`}
             >
               {plan.buttonText}
             </button>
@@ -199,6 +200,8 @@ useEffect(() => {
     
        {paymentStatus === "success" && <PaymentSuccessfulStatus />}
       {paymentStatus === "failed" && <PaymentFailureStatus />}
+      <div className="mt-24"></div>
+      <Footer/>
     </div>
   );
 }

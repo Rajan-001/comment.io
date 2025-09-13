@@ -100,8 +100,9 @@ export const LandingPage = (props: Props) => {
               </div>
             </div>
             <div className="flex justify-center items-center w-full h-36 text-center  ">
-              <input ref={inputRef} placeholder="Paste Your Youtube link" className="w-110 h-12 rounded-full pl-8 place-content-center border-2 active:border-red-400 border-neutral-900 hover:border-red-400 "/>
-              <button onClick={fetchData} className='h-12 ml-2 rounded-3xl w-32 hover:cursor-pointer  bg-neutral-900 hover:bg-red-400 text-slate-200'>Analyze</button>
+              <input ref={inputRef} placeholder="Paste Your Youtube link here" className="w-110 placeholder:text-white h-12 rounded-full pl-8 place-content-center border-2 bg-red-400 text-white transition-all duration-200 hover:shadow-none visited:shadow-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] border-black  "/>
+
+              <button onClick={fetchData} className='h-12 ml-2 rounded-3xl w-32 hover:cursor-pointer transition-all duration-300 border-2 border-black hover:shadow-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:text-white  bg-red-400 text-slate-100'>Analyze</button>
             </div>
         
     
@@ -112,7 +113,7 @@ export const LandingPage = (props: Props) => {
             </div>
             </div>
            }
-
+ 
            
              {
             analysisStatus &&
@@ -129,7 +130,7 @@ export const LandingPage = (props: Props) => {
       {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
               
            <div className='relative w-screen '>
-             <section className='absolute top-1/4 left-1/2 h-[80vh]'>
+             {/* <section className='absolute top-1/4 left-1/2 h-[80vh]'>
             <div className="container -z-10">
             <div className="blur">
               <div className="gradient-mask">
@@ -137,7 +138,7 @@ export const LandingPage = (props: Props) => {
               </div>
             </div>
             </div>
-            </section>
+            </section> */}
           
             <Description/> 
             

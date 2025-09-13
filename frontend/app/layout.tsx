@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
-
+import {Archivo_Black, Gravitas_One, Henny_Penny, Lobster_Two } from "next/font/google";
 import "./globals.css";
 
+
+const handWritten_Cursive=Lobster_Two({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` antialiased bg-gray-50/80`}
+        className={` antialiased bg-yellow-50 ${handWritten_Cursive.className}`}
       >
         {children}
       </body>

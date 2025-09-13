@@ -23,22 +23,19 @@ export default function Page ()  {
         
         <div className='flex flex-col m-8 gap-y-8 mt-12 px-12'>
         
-       <div className='w-full flex justify-center  text-center  '> <GiPin className='animate-bounce w-12 h-full justify-center items pt-2 ' /> <span className='font-extrabold text-5xl ml-2'>Frequently Asked Questions (FAQ)</span> </div>
+       <div className='w-full flex justify-center  text-center border-2 py-6 rounded-xl bg-red-600 text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]  '> <GiPin className='animate-bounce w-12 h-full justify-center items pt-2 ' /> <span className='font-extrabold text-5xl ml-2 '>Frequently Asked Questions (FAQ)</span> </div>
 
         <div className="w-full max-w-3xl mx-auto space-y-4">
       {faq.map((x, i) => (
         <div
           key={i}
-          className="rounded-2xl shadow-md overflow-hidden border border-slate-200"
+          className="rounded-2xl overflow-hidden border  transition-all visited:text-white active:shadow-md duration-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
         >
           {/* Question */}
           <button
             onClick={() => toggleFaq(i)}
-            className={`flex w-full items-center justify-between px-6 py-4 text-lg cursor-pointer font-semibold transition-colors ${
-              openIndexes.includes(i)
-                ? "bg-red-500 text-white"
-                : "bg-red-400 text-slate-100 hover:bg-red-500"
-            }`}
+            style={{backgroundColor:x.color}}
+            className={`flex rounded-2xl w-full items-center border-2 border-black justify-between px-6 py-4 text-lg cursor-pointer font-semibold  transition-colors `}
           >
             <span>
               {x.id}. {x.question}

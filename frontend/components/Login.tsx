@@ -34,7 +34,7 @@ export default function Login({setSignUpModal,setLoginModal}) {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-5 bg-white/30 backdrop-blur-sm">
-      <div className="relative w-[420px] min-h-[480px] bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-400 rounded-3xl shadow-2xl p-8 text-white">
+      <div className="relative w-[420px] min-h-[480px] bg-blue-950 duration-500 rounded-3xl transition-all hover:shadow-none  shadow-[24px_24px_0px_0px_rgba(0,0,0,1)] p-8 text-white">
         
         {/* Header */}
         <div className="text-center mb-6">
@@ -49,10 +49,10 @@ export default function Login({setSignUpModal,setLoginModal}) {
             onChange={(e) => setName(e.target.value)} 
             type="text" 
             placeholder="Enter your name" 
-            className="w-full p-3 border-2 border-slate-200 text-slate-900 rounded-xl text-base 
-                       bg-white/80 focus:border-indigo-500 focus:bg-white transform 
-                       transition-all duration-300 focus:translate-y-[-2px] focus:shadow-lg 
-                       placeholder:text-slate-400 outline-none"
+            className="w-full p-3 
+                    group-hover:shadow-none border-2 visited:shadow-none text-slate-900 rounded-xl hover:shadow-xl bg-yellow-50 focus:border-neutral-900 focus:ring-2  focus:bg-white transform transition-all
+                    duration-300 focus:translate-y-[-2px] shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] placeholder:text-slate-400 outline-none      
+                    border-slate-200 t text-base focus:shadow-lg "
           />
         </div>
 
@@ -61,28 +61,29 @@ export default function Login({setSignUpModal,setLoginModal}) {
           <label className="block text-slate-200 text-sm font-semibold mb-2">Password</label>
           <input 
             onChange={(e) => setPassword(e.target.value)} 
-            type="password" 
+            type="text" 
             placeholder="••••••••" 
-            className="w-full p-3 border-2 border-slate-200 text-slate-900 rounded-xl text-base 
-                       bg-white/80 focus:border-indigo-500 focus:bg-white transform 
-                       transition-all duration-300 focus:translate-y-[-2px] focus:shadow-lg 
-                       placeholder:text-slate-400 outline-none"
+            className=" w-full p-3 
+                    group-hover:shadow-none border-2 visited:shadow-none text-slate-900 rounded-xl hover:shadow-xl bg-yellow-50 focus:border-neutral-900 focus:ring-2  focus:bg-white transform transition-all
+                    duration-300 focus:translate-y-[-2px] shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] placeholder:text-slate-400 outline-none      
+                    border-slate-200 t text-base focus:shadow-lg"
           />
-          <button className="absolute right-3 top-2/3 -translate-y-1/2 text-slate-200 hover:text-indigo-500">
-            👁️
-          </button>
+        
         </div>
 
         {/* Login Button */}
         <button  
           onClick={handleLogin} 
-          className="relative w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
-                     text-white p-4 rounded-xl font-semibold shadow-md hover:shadow-2xl 
-                     transition-all duration-300 ease-in-out transform hover:-translate-y-1 
-                     active:translate-y-0 overflow-hidden group"
+          className="relative w-full bg-yellow-50
+                      cursor-pointer
+                       shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+                      border-2 border-black
+                    text-black p-4 mt-6 rounded-xl font-semibold 
+                     hover:shadow-2xl 
+                    transition-all duration-300 ease-in-out 
+                    transform hover:-translate-y-1 active:translate-y-0 overflow-hidden"
         >
           {/* Glow Ring Effect */}
-          <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 opacity-50 blur-lg group-hover:opacity-70 transition-opacity duration-300"></span>
           
           {/* Shimmer Effect */}
           <span className="absolute top-0 left-[-150%] w-[200%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent 
@@ -100,10 +101,10 @@ export default function Login({setSignUpModal,setLoginModal}) {
 
         {/* Social Buttons */}
         <div className="flex gap-3">
-          <button className="flex-1 flex items-center justify-center gap-2 p-3 border-2 border-slate-200 rounded-xl bg-white/80 text-slate-600 font-medium hover:border-indigo-500 hover:bg-white transform hover:-translate-y-1 hover:shadow-lg transition">
+          <button className="flex-1 group-hover:shadow-none hover:shadow-xl border-2 cursor-pointer border-neutral-900 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:border-2 hover:border-black flex items-center justify-center gap-2 p-3   rounded-xl bg-white text-slate-600 font-medium  transform hover:-translate-y-1 transition">
              <FcGoogle className="w-5 h-5" /> Google 
           </button>
-          <button className="flex-1 flex items-center justify-center gap-2 p-3 border-2 border-slate-200 rounded-xl bg-white/80 text-slate-600 font-medium hover:border-indigo-500 hover:bg-white transform hover:-translate-y-1 hover:shadow-lg transition">
+          <button className="flex-1 group-hover:shadow-none hover:shadow-xl border-2 cursor-pointer border-neutral-900 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:border-2 hover:border-black flex items-center justify-center gap-2 p-3   rounded-xl bg-white text-slate-600 font-medium  transform hover:-translate-y-1 transition">
              <RiTwitterXFill className="w-5 h-5"/> X 
           </button>
         </div>
@@ -112,7 +113,7 @@ export default function Login({setSignUpModal,setLoginModal}) {
         <div className="text-center mt-6">
           <p className="text-slate-100 text-sm">
             Don’t have an account?
-            <span onClick={()=>{setSignUpModal(true);setLoginModal(false);}} className="text-indigo-100 font-semibold cursor-pointer hover:text-violet-500 ml-2">Sign Up</span>
+            <span onClick={()=>{setSignUpModal(true);setLoginModal(false);}} className="text-yellow-200 font-semibold cursor-pointer hover:text-white ml-2">Sign Up</span>
           </p>
         </div>
       </div>

@@ -61,17 +61,17 @@ export default function SignUp({setSignUpModal,setLoginModal}) {
   return ( 
  <div className="min-h-screen flex items-center justify-center p-5">
    
-   <div className="relative w-[420px] min-h-[700px] [perspective:1000px]">
+   <div className="relative w-[420px] min-h-[700px]  [perspective:1000px]  rounded-3xl transition-all duration-300 hover:shadow-none  shadow-[24px_24px_0px_0px_rgba(0,0,0,1)]">
     
     {/* Card Container */}
-    <div id="form-container" className="relative w-full min-h-[700px] [transform-style:preserve-3d] transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <div id="form-container" className="relative w-full min-h-[700px] [transform-style:preserve-3d] px-2 rounded-3xl  transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]">
 
       {/* FRONT SIDE */}
-      <div className="absolute w-full min-h-[700px] backface-hidden bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 backdrop-blur-xl border border-white/30 rounded-3xl p-10 shadow-2xl flex flex-col animate-fadeInUp">
+      <div className="absolute w-full py-4 min-h-[700px] backface-hidden backdrop-blur-xl  rounded-3xl bg-red-800 border-2 border-black px-4  shadow-2xl flex flex-col animate-fadeInUp">
         
         {/* Title */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-extrabold text-white drop-shadow-lg">
+          <h2 className="text-3xl font-extrabold text-black drop-shadow-lg">
             Create Your Account
           </h2>
           <p className="text-slate-100 mt-2 text-sm opacity-90">
@@ -81,52 +81,53 @@ export default function SignUp({setSignUpModal,setLoginModal}) {
 
         {/* Name Field */}
         <div className="mb-5">
-          <label className="block text-slate-200 text-sm font-semibold mb-2">Name</label>
+          <label className="block text-slate-200 group text-sm font-semibold mb-2">Name</label>
           <input 
             onChange={(e) => SetName(e.target.value)}
             type="text" 
             placeholder="John Doe" 
-            className="w-full p-3 border border-slate-200/30 text-slate-900 rounded-xl bg-white/90 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 focus:bg-white transform transition-all duration-300 focus:translate-y-[-2px] shadow-sm placeholder:text-slate-400 outline-none"
+            className="w-full p-3  group-hover:shadow-none border-2 visited:shadow-none text-slate-900 rounded-xl hover:shadow-xl bg-yellow-50 focus:border-neutral-900 focus:ring-2  focus:bg-white transform transition-all duration-300 focus:translate-y-[-2px] shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] placeholder:text-slate-400 outline-none"
           />
+          
         </div>
 
         {/* Email Field */}
         <div className="mb-5">
-          <label className="block text-slate-200 text-sm font-semibold mb-2">Email</label>
+          <label className="block group text-slate-200 text-sm font-semibold mb-2">Email</label>
           <input 
             onChange={(e) => setEmail(e.target.value)}
             type="email" 
             placeholder="you@example.com" 
-            className="w-full p-3 border border-slate-200/30 text-slate-900 rounded-xl bg-white/90 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 focus:bg-white transform transition-all duration-300 focus:translate-y-[-2px] shadow-sm placeholder:text-slate-400 outline-none"
+            className="w-full p-3 group-hover:shadow-none hover:shadow-xl border-neutral-900 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] text-slate-900 rounded-xl bg-yellow-50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 focus:bg-white transform transition-all duration-300 focus:translate-y-[-2px]  placeholder:text-slate-400 outline-none"
           />
         </div>
 
         {/* Password Field */}
-        <div className="relative mb-6">
+        <div className="relative mb-6 group">
           <label className="block text-slate-200 text-sm font-semibold mb-2">Password</label>
           <input 
             onChange={(e) => setPassword(e.target.value)}
-            type="password" 
+           type="text" 
             placeholder="••••••••" 
-            className="w-full p-3 border border-slate-200/30 text-slate-900 rounded-xl bg-white/90 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 focus:bg-white transform transition-all duration-300 focus:translate-y-[-2px] shadow-sm placeholder:text-slate-400 outline-none"
+            className="w-full p-3 border-2 group-hover:shadow-none hover:shadow-xl border-neutral-900 text-slate-900 rounded-xl bg-yellow-50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 focus:bg-white transform transition-all duration-300 focus:translate-y-[-2px] shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] placeholder:text-slate-400 outline-none"
           />
-          <button className="absolute right-3 top-2/3 -translate-y-1/2 text-slate-400 hover:text-indigo-500">
-            👁️
-          </button>
+        
         </div>
 
         {/* Sign Up Button */}
         <button  
           onClick={() => handleSignup()} 
-          className="relative w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
-                    text-white p-4 rounded-xl font-semibold 
-                    shadow-md hover:shadow-2xl 
+          className="relative w-full bg-yellow-50
+                      cursor-pointer
+                       shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+                      border-2 border-black
+                    text-black p-4 rounded-xl font-semibold 
+                     hover:shadow-2xl 
                     transition-all duration-300 ease-in-out 
-                    transform hover:-translate-y-1 active:translate-y-0 overflow-hidden group"
+                    transform hover:-translate-y-1 active:translate-y-0 overflow-hidden  "
         >
-          {/* Glow Ring Effect */}
-          <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 opacity-50 blur-lg group-hover:opacity-70 transition-opacity duration-300"></span>
-          
+       
+           
           {/* Shimmer Effect */}
           <span className="absolute top-0 left-[-150%] w-[200%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent 
                           transform skew-x-[-20deg] group-hover:animate-shimmer"></span>
@@ -146,13 +147,13 @@ export default function SignUp({setSignUpModal,setLoginModal}) {
         <div className="flex gap-4 mb-4">
           <button 
             onClick={() => signIn("google")}
-            className="flex-1 flex items-center justify-center gap-2 p-3 border border-slate-200/50 rounded-xl bg-white text-slate-600 font-medium hover:border-indigo-400 hover:shadow-lg transform hover:-translate-y-1 transition"
+            className="flex-1 group-hover:shadow-none hover:shadow-xl border-2 cursor-pointer border-neutral-900 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:border-2 hover:border-black flex items-center justify-center gap-2 p-3   rounded-xl bg-white text-slate-600 font-medium  transform hover:-translate-y-1 transition"
           >
             <FcGoogle className="w-5 h-5" /> Google 
           </button>
           <button 
             onClick={() => signIn("twitter")}
-            className="flex-1 flex items-center justify-center gap-2 p-3 border border-slate-200/50 rounded-xl bg-white text-slate-600 font-medium hover:border-indigo-400 hover:shadow-lg transform hover:-translate-y-1 transition"
+            className="flex-1 flex items-center group-hover:shadow-none hover:shadow-xl cursor-pointer border-neutral-900 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]  hover:border-2 hover:border-black justify-center gap-2 p-3 border-2  rounded-xl bg-white text-slate-600 font-medium  transform hover:-translate-y-1 transition"
           >
             <RiTwitterXFill className="w-5 h-5"/> X 
           </button>

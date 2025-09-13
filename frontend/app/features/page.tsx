@@ -27,7 +27,7 @@ const containerRef=useRef(null)
 
 
   return (
-   <div ref={containerRef} onMouseMove={handleMouseMove} className="flex flex-col ">
+   <div ref={containerRef} onMouseMove={handleMouseMove} className="flex flex-col bg-yellow-50 ">
   
 
   <div className="w-screen flex flex-col p-12 relative z-10">
@@ -35,24 +35,29 @@ const containerRef=useRef(null)
 <motion.div style={{x,y, background: "transparent",
     boxShadow: "0 0 120px 80px rgba(239, 68, 68, 0.7)",zIndex:"-3",borderRadius:"50%" }}  className=" bg-red-500 pointer-events-none rounded-full shadow-2xl absolute  flex justify-center items-center -translate-x-1/2 -translate-y-1/2"></motion.div>
   
-  <div className='flex justify-center items-center text-center h-52 text-5xl font-extrabold'>
+  <div className='flex justify-center items-center text-center h-52 text-5xl font-extrabold hover:shadow-md transition-all duration-300 bg-pink-400 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'>
     
       AI-Powered Analysis, Human-Level Understanding
    
   </div>
-  <div className='flex justify-center items-center text-center h-20 text-4xl font-bold'>
+  <div className='flex justify-center transition-all duration-200 items-center text-center mt-8 h-20 text-4xl font-bold bg-cyan-300 hover:shadow-md shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'>
     Your analytics need at one place
   </div>
     {/* Page Title */}
-    <div className='grid grid-cols-3 gap-x-12 gap-y-26 mt-12'>
+    <div className='grid grid-cols-3 gap-x-8 gap-y-18 mt-12'>
  { features.map((feature,i)=>(
-    <div key={i} className='flex flex-col w-full h-full gap-y-4'>
-      <div className='w-full flex justify-start items-center '><div style={{ boxShadow: "0 0 8px 14px rgba(239, 42, 68, 0.2)"}} className="w-20 h-20 flex items-center justify-center rounded-full shadow-2xl bg-transparent border border-neutral-300">
-  <feature.icons 
-   className="w-10 h-10 text-primary animate-pulse" />
-</div>
- </div>
-    <div className="flex flex-col gap-y-4 mt-6"><div className="text-4xl font-bold text-start">
+    <div key={i} className='flex border-2 hover:shadow-2xl transition-all duration-500 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] pb-4 pt-4 rounded-2xl   flex-col w-full h-full gap-y-6 '>
+     
+      <div className='w-full flex justify-start items-center px-4'>  
+          <div 
+          style={{backgroundColor:feature.color}}
+          // style={{ boxShadow: "0 0 8px 14px rgba(239, 42, 68, 0.2)"}}
+           className="w-20 h-20 m-4 flex items-center text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] justify-center rounded-full bg-transparent  border-2 border-black">
+          <feature.icons className=" w-10 h-10 text-primary " />
+          </div>
+      </div>
+
+    <div className="flex flex-col gap-y-4 mt-6 "><div style={{backgroundColor:feature.color}} className={`text-4xl  py-4 font-bold text-start pl-2  text-black`}>
          {feature.title}
      </div><div className="text-lg text-start mt-4 max-w-3xl mx-auto text-gray-700">
              {feature.text}
