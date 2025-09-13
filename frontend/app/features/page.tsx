@@ -27,26 +27,24 @@ const containerRef=useRef(null)
 
 
   return (
-   <div ref={containerRef} onMouseMove={handleMouseMove} className="flex flex-col bg-yellow-50 ">
+   <div ref={containerRef}  className="flex flex-col bg-yellow-50 ">
   
 
   <div className="w-screen flex flex-col p-12 relative z-10">
   <Navbar/>
-<motion.div style={{x,y, background: "transparent",
-    boxShadow: "0 0 120px 80px rgba(239, 68, 68, 0.7)",zIndex:"-3",borderRadius:"50%" }}  className=" bg-red-500 pointer-events-none rounded-full shadow-2xl absolute  flex justify-center items-center -translate-x-1/2 -translate-y-1/2"></motion.div>
   
-  <div className='flex justify-center items-center text-center h-52 text-5xl font-extrabold hover:shadow-md transition-all duration-300 bg-pink-400 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'>
+  <div className='flex z-10 justify-center items-center text-center h-52 text-5xl font-extrabold hover:shadow-md transition-all duration-300 bg-pink-400 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'>
     
       AI-Powered Analysis, Human-Level Understanding
    
   </div>
-  <div className='flex justify-center transition-all duration-200 items-center text-center mt-8 h-20 text-4xl font-bold bg-cyan-300 hover:shadow-md shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'>
+  <div className='flex z-10 justify-center transition-all duration-200 items-center text-center mt-8 h-20 text-4xl font-bold bg-cyan-300 hover:shadow-md shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'>
     Your analytics need at one place
   </div>
     {/* Page Title */}
     <div className='grid grid-cols-3 gap-x-8 gap-y-18 mt-12'>
  { features.map((feature,i)=>(
-    <div key={i} className='flex border-2 hover:shadow-2xl transition-all duration-500 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] pb-4 pt-4 rounded-2xl   flex-col w-full h-full gap-y-6 '>
+    <div key={i} className='flex z-10 border-2 hover:shadow-2xl transition-all duration-500 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] pb-4 pt-4 rounded-2xl   flex-col w-full h-full gap-y-6 '>
      
       <div className='w-full flex justify-start items-center px-4'>  
           <div 
