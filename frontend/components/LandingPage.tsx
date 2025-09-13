@@ -95,7 +95,7 @@ export const LandingPage = (props: Props) => {
        <div className='w-screen'>
         
             <div className="flex justify-center items-center w-full h-1/5 mt-8">
-              <div className='text-5xl text-neutral-900 hover:text-red-400'>
+              <div className='text-5xl text-red-400'>
                 Youtube Video Comment Analyser 
               </div>
             </div>
