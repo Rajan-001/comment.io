@@ -22,8 +22,8 @@ export const Description = (props: Props) => {
   <div className="grid grid-cols-1 mt-28 md:grid-cols-3 gap-8 w-full max-w-6xl">
     
     {/* Feature 1 */}
-    <div className="bg-white  rounded-2xl border-3 transition-all duration-300 border-black  hover:shadow-lg  group shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
-      <div className=' w-full justify-center items-start p-4'><GiBrain className='border-black border-2 h-16 rounded-xl p-2 hover:text-slate-200 w-16 bg-red-400 text-white group-hover:scale-120 transition-all duration-300' /></div>
+    <div className="bg-cyan-50  rounded-2xl border-3 transition-all duration-300 border-black  hover:shadow-lg  group shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
+      <div className=' w-full justify-center items-start p-4'><GiBrain className='border-black group-hover:shadow-none border-2 h-16 rounded-xl p-2 hover:text-slate-200 w-16 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] bg-red-400 text-white group-hover:scale-120 transition-all duration-300' /></div>
       <h3 className="text-[24px] p-4 mt-4 font-bold mb-2 bg-red-700 text-black border-2 border-black"> Smart Comment Summarization</h3>
       <p className="text-slate-700 mt-2 text-base p-4">
         Too many comments? No problem. Our tool highlights key themes, trending phrases, and top reactions so you get the full picture without reading every word.
@@ -31,9 +31,9 @@ export const Description = (props: Props) => {
     </div>
 
     {/* Feature 2 */}
-    <div className="bg-white rounded-2xl hover:shadow-lg border-3 border-black transition-all duration-300 group shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
+    <div className="bg-cyan-50  rounded-2xl hover:shadow-lg border-3 border-black transition-all duration-300 group shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
       <div className=' w-full justify-center items-start p-4'>
-        <Image src={"/polling.png"} width={2} height={30} unoptimized alt='poll Image'  className='h-16 rounded-xl p-2 hover:text-slate-200 w-16  text-white group-hover:scale-120 transition-all duration-300' />
+        <Image src={"/polling.png"} width={2} height={30} unoptimized alt='poll Image'  className='h-16 group-hover:shadow-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] border-2 border-black rounded-xl p-2 hover:text-slate-200 w-16  text-white group-hover:scale-120 transition-all duration-300' />
       </div>
       <h3 className="text-[26px] p-4 mt-4 font-bold mb-2 bg-indigo-700 text-black border-2 border-black">Audience Pulse at a Glance</h3>
       <p className="text-slate-700 mt-2 text-base p-4">
@@ -42,9 +42,9 @@ export const Description = (props: Props) => {
     </div>
 
     {/* Feature 3 */}
-    <div className="bg-white rounded-2xl transition-all duration-300 border-3 border-black hover:shadow-lg  group shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] ">
+    <div className="bg-cyan-50  rounded-2xl transition-all duration-300 border-3 border-black hover:shadow-lg  group shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] ">
       <div className=' w-full justify-center items-start p-4 '>
-        <ImHeart       className='h-16 rounded-xl p-2 text-red-500 hover:text-slate-200 w-16   group-hover:scale-120 transition-all duration-300' /></div>
+        <ImHeart       className='h-16 group-hover:shadow-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] border-2 border-black rounded-xl p-2 text-red-500 hover:text-slate-200 w-16   group-hover:scale-120 transition-all duration-300' /></div>
     
       <h3 className="text-[26px]  p-4 mt-4 font-bold mb-2 bg-emerald-700 text-black border-2 border-black">Emotion-Driven Feedback Mapping</h3>
       <p className="text-slate-700 mt-2 text-base p-4">
