@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import Razorpay from "razorpay";
 const crypto = require('crypto');
@@ -176,94 +176,137 @@ app.post("/api/analysis", async (req: Request, res: Response) => {
   try {
     const { comments } = req.body;
 
-
     if (!comments || !Array.isArray(comments)) {
-      return res.status(400).json({ error: "Comments array is required" });
+      return res.status(400).json({
+        error: "Comments array is required",
+      });
     }
 
-    // Initialize Google Generative AI client
-    const ai = new GoogleGenerativeAI(process.env.GOOGLE_GEN_API_KEY!);
-    const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const apiKey = process.env.GOOGLE_GEN_API_KEY;
 
-    // Generate content
-    const result = await model.generateContent(`
-      You are given a list of YouTube comments with details like username, comment text, likes, and timestamp.
+    console.log("Gemini API key exists:", !!apiKey);
 
-      Your tasks:
-      1. Analyze the sentiment of each comment: classify as "positive", "negative", or "neutral".
-      2. Identify and extract any suggestions mentioned in the comments (if present).
-      3. Provide the total count of:
-          - Positive comments
-          - Negative comments
-          - Neutral comments
-      4. Identify the user who gave the most positive comment (most enthusiastic or appreciative).
-      5. Provide:
-          - A list of usernames who gave positive comments
-          - A list of usernames who gave negative comments
-          - A list of usernames who gave suggestions
+    if (!apiKey) {
+      return res.status(500).json({
+        error: "GOOGLE_GEN_API_KEY is not configured",
+      });
+    }
 
-      6. Return the result strictly in the following JSON format :
+    const ai = new GoogleGenAI({
+      apiKey,
+    });
 
-       Analyze the comments and output ONLY a valid JSON object in this exact format:
+    const prompt = `
+You are given a list of YouTube comments.
 
-          {
-            "summary": {
-              "totalPositive": number,
-              "totalNegative": number,
-              "totalNeutral": number,
-              "mostPositiveUser": "username"
-            },
-            "positiveUsers": [
-              {
-                "username": "string",
-                "profilePic": "string",
-                "comment": "string",
-                "likes": number
-              }
-            ],
-            "negativeUsers": [
-              {
-                "username": "string",
-                "profilePic": "string",
-                "comment": "string",
-                "likes": number
-              }
-            ],
-            "suggestionUsers": [
-              {
-                "username": "string",
-                "profilePic": "string",
-                "comment": "string",
-                "likes": number,
-                "suggestion": "string"
-              }
-            ]
-          }
+Analyze every comment and return ONLY valid JSON.
 
-          ⚠ RULES:
-          1. Output ONLY JSON — no explanation, no extra text.
-          2. Every positive comment must be listed in **positiveUsers** with full details.
-          3. Every negative comment must be listed in **negativeUsers** with full details.
-          4. Every comment containing a suggestion (feedback, request, or improvement idea) must be listed in **suggestionUsers** with full details.
-          5. Use the **profilePic, username, comment text, and likes** exactly from the input data — don’t make anything up.
+Tasks:
+1. Classify every comment as positive, negative, or neutral.
+2. Identify suggestions, feedback, requests, or improvement ideas.
+3. Calculate total positive, negative, and neutral comments.
+4. Identify the most positive user.
+5. Return positive users, negative users, and users who made suggestions.
 
-          Here is the list of comments to analyze:
+Return exactly this JSON structure:
 
-      ${JSON.stringify(comments)}
-    `);
-    
-   
-   
-    // Extract and clean AI response
-    const reply = await result.response.text();
-     console.log(reply)
-    const parsed = JSON.parse(reply.replace(/```json|```/g, "").trim());
-     console.log("it is parsed",parsed)
+{
+  "summary": {
+    "totalPositive": 0,
+    "totalNegative": 0,
+    "totalNeutral": 0,
+    "mostPositiveUser": ""
+  },
+  "positiveUsers": [
+    {
+      "username": "",
+      "profilePic": "",
+      "comment": "",
+      "likes": 0
+    }
+  ],
+  "negativeUsers": [
+    {
+      "username": "",
+      "profilePic": "",
+      "comment": "",
+      "likes": 0
+    }
+  ],
+  "suggestionUsers": [
+    {
+      "username": "",
+      "profilePic": "",
+      "comment": "",
+      "likes": 0,
+      "suggestion": ""
+    }
+  ]
+}
+
+Rules:
+- Output ONLY JSON.
+- Do not use markdown.
+- Do not invent information.
+- Preserve username exactly.
+- Preserve profilePic exactly.
+- Preserve comment exactly.
+- Preserve likes exactly.
+- Every comment must be classified.
+- totalPositive + totalNegative + totalNeutral must equal the number of comments.
+- If there are no suggestions, return [].
+- If there is no positive comment, mostPositiveUser must be "".
+
+Comments:
+
+${JSON.stringify(comments)}
+`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-3.6-flash",
+      contents: prompt,
+    });
+
+    const reply = response.text;
+
+    console.log("Gemini response:");
+    console.log(reply);
+
+    if (!reply) {
+      return res.status(500).json({
+        error: "Gemini returned an empty response",
+      });
+    }
+
+    let cleanedReply = reply
+      .trim()
+      .replace(/^```json\s*/i, "")
+      .replace(/^```\s*/i, "")
+      .replace(/\s*```$/i, "")
+      .trim();
+
+    let parsed;
+
+    try {
+      parsed = JSON.parse(cleanedReply);
+    } catch (error) {
+      console.error("Invalid JSON from Gemini:", cleanedReply);
+
+      return res.status(500).json({
+        error: "Gemini returned invalid JSON",
+        rawResponse: cleanedReply,
+      });
+    }
 
     return res.status(200).json(parsed);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Internal Server Error" });
+
+  } catch (err: any) {
+    console.error("Gemini error:", err);
+
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message: err?.message || "Unknown Gemini error",
+    });
   }
 });
 
