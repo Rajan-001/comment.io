@@ -4,11 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --no-lint",
-    "start": "next start",
-    "lint": "next lint"
-  },
+  "dev": "next dev --turbopack",
+  "build": "next build",
+  "start": "next start",
+  "lint": "eslint ."
+   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@tailwindcss/postcss": "^4.1.12",
