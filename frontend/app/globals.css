@@ -420,3 +420,93 @@ background: conic-gradient(
 }
 
 
+.loader, .loader::after, .loader::before, .loader .insides::before, .loader .insides::after {
+  position: absolute;
+  background: transparent;
+  border: 3px solid red;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+}
+
+.loader {
+ 
+  margin-left: -30px;
+  margin-top: 20px;
+  border: 3px solid black;
+  animation: fun 2s ease-in-out alternate infinite;
+}
+.loader::after {
+  content: '';
+  border: 3px solid blue;
+  left: 100%;
+  top: 100%;
+  animation: zip 1s ease-in-out alternate infinite;
+}
+.loader::before {
+  content: '';
+  border: 3px solid orange;
+  right: 100%;
+  bottom: 100%;
+  animation: zap 1s ease-in-out alternate infinite;
+}
+.loader .insides::before {
+  content: '';
+  left: 100%;
+  bottom: 100%;border: 3px solid green;
+  animation: zig 1s ease-in-out alternate infinite;
+}
+.loader .insides::after {
+  content: '';
+  right: 100%;
+  top: 100%;
+  animation: zag 1s ease-in-out alternate infinite;
+}
+@keyframes fun {
+  from {
+    transform: rotate(0deg) scale(0.6);
+  }
+  to {
+    transform: rotate(720deg) scale(1);
+  }
+}
+@keyframes zap {
+  from {
+    right: 100%;
+    bottom: 100%;
+  }
+  to {
+    right: 5%;
+    bottom: 5%;
+  }
+}
+@keyframes zip {
+  from {
+    top: 100%;
+    left: 100%;
+  }
+  to {
+    top: 5%;
+    left: 5%;
+  }
+}
+@keyframes zag {
+  from {
+    right: 100%;
+    top: 100%;
+  }
+  to {
+    right: 5%;
+    top: 5%;
+  }
+}
+@keyframes zig {
+  from {
+    bottom: 100%;
+    left: 100%;
+  }
+  to {
+    bottom: 5%;
+    left: 5%;
+  }
+}

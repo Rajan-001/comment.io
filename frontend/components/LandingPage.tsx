@@ -109,9 +109,13 @@ export const LandingPage = (props: Props) => {
 
            { loading &&
            <div className='h-38 w-screen flex justify-center items-center'>
-           <div className='loader-105'>
+           {/* <div className='loader-105'>
+            </div> */}
+            <div className='loader'>
+            <div className='insides'></div>
+          </div>
             </div>
-            </div>
+         
            }
  
            
