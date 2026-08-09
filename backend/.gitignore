@@ -1,6 +1,11 @@
 # Node.js dependencies
 node_modules/
 
+
+
+.env.*
+!.env.example
+
 # Logs
 logs
 *.log
